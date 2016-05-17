@@ -67,5 +67,5 @@ func main() {
 	fmt.Println("Started")
    http.HandleFunc("/", helpHandler)
    http.HandleFunc("/alert", alertHandler)
-   http.ListenAndServe(":8080", nil)
+   http.ListenAndServe(":80", nil)
 }
