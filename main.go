@@ -36,7 +36,7 @@ func alertHandler(w http.ResponseWriter, r *http.Request) {
 	url_path := fmt.Sprintf("https://metrics-api.librato.com/v1/annotations/alerts.%s", alert)
 
 	//Only librato.com accounts may use
-	if strings.HasSuffix(account,"librato.com"){
+	if ! strings.HasSuffix(account,"librato.com"){
 		fmt.Printf("Dropping request from %s",account)
 		return
 	}
