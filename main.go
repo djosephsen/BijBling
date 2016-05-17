@@ -25,7 +25,6 @@ func alertHandler(w http.ResponseWriter, r *http.Request) {
 	//panic if we don't have librato credentials
 	if luser == `` || lpass == `` {
 		fmt.Printf("ERROR::Export BIJ_USER and BIJ_TOKEN with your librato credentials")
-		os.Exit(42)
 	}
 
 	//parse out the server name and alert name from the alert payload
@@ -64,8 +63,9 @@ func alertHandler(w http.ResponseWriter, r *http.Request) {
 
 //lets kick this pig
 func main() {
-	fmt.Println("Started")
+	port := fmt.Sprintf(":%s",os.Getenv("PORT"))
+	fmt.Printf("Starting on port %s",port)
    http.HandleFunc("/", helpHandler)
    http.HandleFunc("/alert", alertHandler)
-   http.ListenAndServe(":80", nil)
+   http.ListenAndServe(port, nil)
 }
