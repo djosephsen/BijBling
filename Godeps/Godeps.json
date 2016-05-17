@@ -1,0 +1,10 @@
+{
+	"ImportPath": "github.com/djosephsen/BijBling",
+	"GoVersion": "go1.6.2",
+	"Deps": [
+		{
+			"ImportPath": "github.com/Jeffail/gabs",
+			"Rev": "c28ac41b517d24bf381d39d5a294fac6536d81fa"
+		}
+	]
+}
