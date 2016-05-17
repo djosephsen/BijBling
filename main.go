@@ -28,9 +28,8 @@ func alertHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//parse out the server name and alert name from the alert payload
-	payload,_ := ioutil.ReadAll(r.Body)
-	raw,_ := url.QueryUnescape(string(payload))
-	fmt.Printf("Raw input\n\n %s",raw)
+	r_form := r.ParseForm()
+	payload := r_form.Get("payload")
 	parsed_payload,_ := gabs.ParseJSON(payload)
 	account,_ := parsed_payload.Path("account").Data().(string)
    alert, _ := parsed_payload.Path("alert.name").Data().(string)
@@ -41,7 +40,6 @@ func alertHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("Dropping request from %s",account)
 		return
 	}
-
 
    violators, _ := parsed_payload.S("violations").ChildrenMap()
 	for host, _ := range violators {
