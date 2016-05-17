@@ -29,7 +29,8 @@ func alertHandler(w http.ResponseWriter, r *http.Request) {
 
 	//parse out the server name and alert name from the alert payload
 	payload,_ := ioutil.ReadAll(r.Body)
-	fmt.Printf("Raw input\n\n %s",payload)
+	raw,_ := url.QueryUnescape(string(payload))
+	fmt.Printf("Raw input\n\n %s",raw)
 	parsed_payload,_ := gabs.ParseJSON(payload)
 	account,_ := parsed_payload.Path("account").Data().(string)
    alert, _ := parsed_payload.Path("alert.name").Data().(string)
