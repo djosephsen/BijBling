@@ -24,7 +24,8 @@ func alertHandler(w http.ResponseWriter, r *http.Request) {
 
 	//panic if we don't have librato credentials
 	if luser == `` || lpass == `` {
-		panic("Export BIJ_USER and BIJ_TOKEN with your librato credentials")
+		fmt.Printf("ERROR::Export BIJ_USER and BIJ_TOKEN with your librato credentials")
+		os.Exit(42)
 	}
 
 	//parse out the server name and alert name from the alert payload
