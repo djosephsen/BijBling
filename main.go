@@ -30,8 +30,16 @@ func alertHandler(w http.ResponseWriter, r *http.Request) {
 	//parse out the server name and alert name from the alert payload
 	payload,_ := ioutil.ReadAll(r.Body)
 	parsed_payload,_ := gabs.ParseJSON(payload)
+	account,_ := parsed_payload.Path("account").Data().(string)
    alert, _ := parsed_payload.Path("alert.name").Data().(string)
 	url_path := fmt.Sprintf("https://metrics-api.librato.com/v1/annotations/alerts.%s", alert)
+
+	//Only librato.com accounts may use
+	if strings.HasSuffix(account,"librato.com"){
+		fmt.Printf("Dropping request from %s",account)
+		return
+	}
+
 
    violators, _ := parsed_payload.S("violations").ChildrenMap()
 	for host, _ := range violators {
