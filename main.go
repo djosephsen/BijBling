@@ -28,9 +28,9 @@ func alertHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//parse out the server name and alert name from the alert payload
-	r_form := r.ParseForm()
-	payload := r_form.Get("payload")
-	parsed_payload,_ := gabs.ParseJSON(payload)
+	r.ParseForm()
+	payload := r.PostForm.Get("payload")
+	parsed_payload,_ := gabs.ParseJSON([]byte(payload))
 	account,_ := parsed_payload.Path("account").Data().(string)
    alert, _ := parsed_payload.Path("alert.name").Data().(string)
 	url_path := fmt.Sprintf("https://metrics-api.librato.com/v1/annotations/alerts.%s", alert)
